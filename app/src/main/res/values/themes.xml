@@ -1,0 +1,8 @@
+<resources>
+ <style name="Theme.Gravik" parent="android:style/Theme.Material.Light.NoActionBar">
+  <item name="android:fontFamily">sans</item><item name="android:colorAccent">#D7A536</item>
+  <item name="android:navigationBarColor">#050505</item><item name="android:statusBarColor">#050505</item>
+  <item name="android:windowLightStatusBar">false</item><item name="android:windowLightNavigationBar">false</item>
+  <item name="android:windowBackground">#050505</item>
+ </style>
+</resources>
