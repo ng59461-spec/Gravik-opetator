@@ -45,6 +45,18 @@ const DOCREFS={
  'Mercedes-Benz|Econic':[['PTI Econic','Serie 956','AD00.00-W-0001NE']],
  'Mercedes-Benz|Unimog':[['PTI Unimog','Serie 405','AD00.00-G-0001UG'],['PTI Unimog','Serie 437','AD00.00-G-0001UH']]
 };
+const TECHSYSTEMS={
+ 'Mercedes-Benz|Actros':{
+  'Motor y mecánica':['OM 471','Refrigeración','Lubricación','Admisión y escape'],
+  'Electricidad / electrónica':['Red de a bordo','Sensores y actuadores','Baterías y carga','Unidades de control'],
+  'Mantenimiento':['Identificación por serie/VIN','Fluidos y especificaciones','Inspección preoperacional','Intervalos según configuración']
+ },
+ 'Mercedes-Benz|Actros L':{
+  'Motor y mecánica':['OM 471 / OM 473 según configuración','Refrigeración','Lubricación','Admisión y escape'],
+  'Electricidad / electrónica':['Red de a bordo','Sensores y actuadores','Baterías y carga','Unidades de control'],
+  'Mantenimiento':['Identificación por serie/VIN','Fluidos y especificaciones','Inspección preoperacional','Intervalos según configuración']
+ }
+};
 const SAFE_GUIDES={
  'Motor y mecánica':[
   ['Antes de intervenir','Estacionar de forma segura, aplicar freno de estacionamiento y seguir el procedimiento del fabricante.'],
