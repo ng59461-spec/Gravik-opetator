@@ -45,6 +45,23 @@ const DOCREFS={
  'Mercedes-Benz|Econic':[['PTI Econic','Serie 956','AD00.00-W-0001NE']],
  'Mercedes-Benz|Unimog':[['PTI Unimog','Serie 405','AD00.00-G-0001UG'],['PTI Unimog','Serie 437','AD00.00-G-0001UH']]
 };
+const SAFE_GUIDES={
+ 'Motor y mecánica':[
+  ['Antes de intervenir','Estacionar de forma segura, aplicar freno de estacionamiento y seguir el procedimiento del fabricante.'],
+  ['Motor caliente','No abrir circuitos presurizados de refrigeración con el motor caliente.'],
+  ['Fuga o alarma crítica','Detener la operación cuando exista riesgo de daño, incendio o pérdida importante de fluido y reportar a mantenimiento.']
+ ],
+ 'Electricidad / electrónica':[
+  ['Antes de desconectar','Identificar el circuito y seguir el procedimiento de aislamiento indicado para el vehículo.'],
+  ['Conectores','Inspección visual de humedad, corrosión, terminales flojos o daño físico sin puentear protecciones.'],
+  ['Diagnóstico','No sustituir fusibles por valores distintos ni puentear sensores para mantener la máquina operativa.']
+ ],
+ 'Mantenimiento':[
+  ['Identificación','Confirmar modelo, serie/VIN y configuración antes de aplicar capacidades o intervalos.'],
+  ['Fluidos','Usar únicamente especificaciones aprobadas para la variante confirmada.'],
+  ['Registro','Registrar hallazgos y anomalías para mantenimiento antes de devolver el equipo a servicio.']
+ ]
+};
 const SYSTEMS=[
  ['Información general','Identificación, configuración y datos de referencia'],
  ['Códigos de falla','Buscar por código y sistema; sin interpretar códigos no verificados'],
