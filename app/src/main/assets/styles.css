@@ -18,3 +18,9 @@ textarea{min-height:110px;resize:vertical}
 .nelson-mark{width:54px;height:54px;display:grid;place-items:center;border-radius:50%;border:1px solid #8a6a1e;color:var(--gold2);font-weight:900;font-size:19px}
 .nelson-hero b,.nelson-hero small{display:block}.nelson-hero small{color:#bbb;margin-top:3px}
 @media(max-width:390px){.topbar{padding-left:8px;padding-right:8px;grid-template-columns:40px 40px minmax(0,1fr) 40px}.brand strong{font-size:11.5px}.brand small{font-size:6px}.hero h1{font-size:28px}}
+
+/* GRAVIK V2.1 professional local SVG icon system */
+.ui-icon{display:inline-flex;width:22px;height:22px;align-items:center;justify-content:center;vertical-align:middle}
+.ui-icon svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ui-icon svg .cut{fill:var(--bg,#050505);stroke:none}
+button .ui-icon,.nav-item .ui-icon{margin-right:6px}
