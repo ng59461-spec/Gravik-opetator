@@ -5,13 +5,26 @@ const TYPES={
  'Motoniveladoras':['Caterpillar','John Deere','Komatsu']
 };
 const MODELS={
- 'Mercedes-Benz':['Actros','Arocs','Atego'],
+ 'Mercedes-Benz':['Actros','Actros L','Actros F','Arocs','Atego','Axor','Econic','Unimog'],
  'Volvo':['Seleccionar familia/modelo'],
  'Caterpillar':['Seleccionar modelo exacto'],
  'Komatsu':['Seleccionar modelo exacto'],
  'Hitachi':['Seleccionar modelo exacto'],
  'Develon':['Seleccionar modelo exacto'],
  'John Deere':['Seleccionar modelo exacto']
+};
+const VERIFIED={
+ 'Mercedes-Benz|Actros':[
+  ['Familia de motor','OM 471 (según versión/configuración)','Fuente oficial Mercedes-Benz Trucks'],
+  ['Cilindrada OM 471','12,8 L','Ficha técnica oficial del Nuevo Actros'],
+  ['Arquitectura OM 471','6 cilindros en línea','Ficha técnica oficial del Nuevo Actros'],
+  ['Potencias OM 471','310–390 kW (421–530 CV), según versión','Ficha técnica oficial del Nuevo Actros'],
+  ['Par máx. OM 471','2100–2600 Nm, según versión','Ficha técnica oficial del Nuevo Actros']
+ ],
+ 'Mercedes-Benz|Actros L':[
+  ['Motores documentados','OM 471 / OM 473, según configuración','Mercedes-Benz Trucks'],
+  ['Cabina GigaSpace','2.500 mm ancho exterior / 2.300 mm largo','Mercedes-Benz Trucks']
+ ]
 };
 const SYSTEMS=[
  ['Información general','Identificación, configuración y datos de referencia'],
@@ -49,7 +62,9 @@ function render(route){
  if(route.startsWith('type:')){state.type=decodeURIComponent(route.slice(5));screen.innerHTML=head(state.type,'Selecciona el fabricante.','Equipos <span>›</span> '+esc(state.type))+TYPES[state.type].map(b=>list('brand:'+encodeURIComponent(b),b[0],b,'Abrir biblioteca de '+b)).join('')+sourceRule();bind();return}
  if(route.startsWith('brand:')){state.brand=decodeURIComponent(route.slice(6));let models=MODELS[state.brand]||['Seleccionar modelo exacto'];screen.innerHTML=head(state.brand,'Biblioteca organizada por modelo.','Equipos › '+esc(state.type||'')+' <span>›</span> '+esc(state.brand))+models.map(m=>list('model:'+encodeURIComponent(m),'M',m,'Abrir información por sistemas')).join('')+sourceRule();bind();return}
  if(route.startsWith('model:')){state.model=decodeURIComponent(route.slice(6));screen.innerHTML=head(state.model,'Selecciona el área técnica que necesitas.',''+esc(state.brand||'Marca')+' <span>›</span> '+esc(state.model))+SYSTEMS.map((s,i)=>list('system:'+i,'0'+(i+1),s[0],s[1])).join('')+sourceRule();bind();return}
- if(route.startsWith('system:')){let s=SYSTEMS[Number(route.slice(7))]||SYSTEMS[0];screen.innerHTML=head(s[0],s[1],esc(state.brand||'Marca')+' › '+esc(state.model||'Modelo')+' <span>›</span> '+s[0])+`<div class="notice"><b>Ficha técnica preparada para contenido verificado.</b><br>Esta V2 no rellenará esta sección con datos supuestos. Cuando una especificación dependa de variante, motor, serie/VIN o configuración, GRAVIK solicitará esa identificación antes de mostrarla.</div>`+sourceRule()+safety();return}
+ if(route.startsWith('system:')){let s=SYSTEMS[Number(route.slice(7))]||SYSTEMS[0];
+ if(Number(route.slice(7))===0){let rows=VERIFIED[(state.brand||'')+'|'+(state.model||'')]||[];screen.innerHTML=head('Información general','Datos identificados y respaldados para esta familia.',''+esc(state.brand||'Marca')+' › '+esc(state.model||'Modelo')+' <span>›</span> Información general')+(rows.length?'<div class="notice verified"><b>Datos con fuente oficial.</b> Los valores que dependen de variante siguen marcados como tales.</div>'+rows.map(r=>'<div class="list-card"><span class="badge">✓</span><span class="grow"><b>'+r[0]+'</b><small>'+r[1]+'</small><small>Fuente: '+r[2]+'</small></span></div>').join(''):'<div class="notice">Todavía no hay especificaciones cargadas para esta combinación. GRAVIK no completará espacios con datos supuestos.</div>')+sourceRule()+safety();return}
+screen.innerHTML=head(s[0],s[1],esc(state.brand||'Marca')+' › '+esc(state.model||'Modelo')+' <span>›</span> '+s[0])+`<div class="notice"><b>Ficha técnica preparada para contenido verificado.</b><br>Esta V2 no rellenará esta sección con datos supuestos. Cuando una especificación dependa de variante, motor, serie/VIN o configuración, GRAVIK solicitará esa identificación antes de mostrarla.</div>`+sourceRule()+safety();return}
  if(route==='simbolos'){screen.innerHTML=head('Símbolos','Cada alerta abre su propia ficha, sin amontonar información.')+SYMBOLS.map((s,i)=>list('symbol:'+i,'⚠',s[0],'Abrir explicación')).join('')+safety();bind();return}
  if(route.startsWith('symbol:')){let s=SYMBOLS[Number(route.slice(7))];screen.innerHTML=head(s[0],'Ficha de orientación general.','Símbolos <span>›</span> '+s[0])+`<div class="list-card"><span class="badge">!</span><span class="grow"><b>Qué significa</b><small>${s[1]}</small></span></div>`+sourceRule()+safety();return}
  if(route==='mecanica'){screen.innerHTML=head('Mecánica','Selecciona un sistema para entrar a su pantalla.')+['Motor diésel','Sistema hidráulico','Sistema eléctrico / electrónico','Transmisión','Tren de rodaje','Refrigeración'].map((x,i)=>list('mechanic:'+i,'⚙',x,'Abrir módulo')).join('')+safety();bind();return}
