@@ -16,7 +16,7 @@ public class MainActivity extends Activity {
   webView=new WebView(this); webView.setBackgroundColor(Color.rgb(5,5,5)); setContentView(webView);
   WebSettings s=webView.getSettings(); s.setJavaScriptEnabled(true); s.setDomStorageEnabled(true); s.setAllowFileAccess(true); s.setAllowContentAccess(false); s.setAllowFileAccessFromFileURLs(false); s.setAllowUniversalAccessFromFileURLs(false); s.setSupportZoom(false); s.setBuiltInZoomControls(false); s.setDisplayZoomControls(false);
   webView.setWebViewClient(new WebViewClient(){
-   @Override public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request){ Uri u=request.getUrl(); return !("file".equals(u.getScheme()) && "android_asset".equals(u.getHost())); }
+   @Override public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request){ Uri u=request.getUrl(); return !("file".equals(u.getScheme()) && u.toString().startsWith("file:///android_asset/")); }
    @Override public boolean shouldOverrideUrlLoading(WebView view, String url){ return !url.startsWith("file:///android_asset/"); }
   }); webView.loadUrl("file:///android_asset/index.html");
  }
