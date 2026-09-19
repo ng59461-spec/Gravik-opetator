@@ -26,9 +26,24 @@ const VERIFIED={
   ['OM 473','15,6 L · 6 cilindros · 380 kW · 2.600 Nm en configuración publicada','Mercedes-Benz Trucks Argentina'],
   ['Cabina L GigaSpace','2.500 mm ancho exterior · 2.300 mm largo','Mercedes-Benz Trucks'],
   ['GigaSpace: altura interior','2.130 mm entre asientos · 2.050 mm delante de asientos','Mercedes-Benz Trucks'],
+  ['Serie / documentación PTI','Actros 963 · la generación/código de equipo define el documento aplicable','Mercedes-Benz Trucks Service Information'],
   ['Cabina L BigSpace','2.500 mm ancho exterior · 2.300 mm largo','Mercedes-Benz Trucks'],
-  ['BigSpace: altura interior','1.990 mm entre asientos · 1.910 mm delante de asientos','Mercedes-Benz Trucks']
+  ['BigSpace: altura interior','1.990 mm entre asientos · 1.910 mm delante de asientos','Mercedes-Benz Trucks'],
+  ['Acceso de reparación y mantenimiento','XENTRY Truck WIS / Service Information Portal; contenido profesional puede requerir acceso','Mercedes-Benz Trucks Service Information']
  ]
+};
+const DOCREFS={
+ 'Mercedes-Benz|Actros':[
+  ['PTI Actros generación 5','Serie 963 con código V2B/V2F','AD00.00-W-0001F'],
+  ['PTI Actros generación 1','Serie 963 con código V2A, excepto V2B','AD00.00-W-0001H']
+ ],
+ 'Mercedes-Benz|Arocs':[
+  ['PTI Arocs generación 5','Serie 964 V2J / 946 V3L','AD00.00-W-0001FA'],
+  ['PTI Arocs generación 1','Serie 964 V3K, excepto V2J','AD00.00-W-0001HA']
+ ],
+ 'Mercedes-Benz|Atego':[['PTI Atego','Serie 967','AD00.00-W-0001NA']],
+ 'Mercedes-Benz|Econic':[['PTI Econic','Serie 956','AD00.00-W-0001NE']],
+ 'Mercedes-Benz|Unimog':[['PTI Unimog','Serie 405','AD00.00-G-0001UG'],['PTI Unimog','Serie 437','AD00.00-G-0001UH']]
 };
 const SYSTEMS=[
  ['Información general','Identificación, configuración y datos de referencia'],
@@ -67,6 +82,7 @@ function render(route){
  if(route.startsWith('brand:')){state.brand=decodeURIComponent(route.slice(6));let models=MODELS[state.brand]||['Seleccionar modelo exacto'];screen.innerHTML=head(state.brand,'Biblioteca organizada por modelo.','Equipos › '+esc(state.type||'')+' <span>›</span> '+esc(state.brand))+models.map(m=>list('model:'+encodeURIComponent(m),'M',m,'Abrir información por sistemas')).join('')+sourceRule();bind();return}
  if(route.startsWith('model:')){state.model=decodeURIComponent(route.slice(6));screen.innerHTML=head(state.model,'Selecciona el área técnica que necesitas.',''+esc(state.brand||'Marca')+' <span>›</span> '+esc(state.model))+SYSTEMS.map((s,i)=>list('system:'+i,'0'+(i+1),s[0],s[1])).join('')+sourceRule();bind();return}
  if(route.startsWith('system:')){let idx=Number(route.slice(7)),s=SYSTEMS[idx]||SYSTEMS[0];
+ if(idx===7){let docs=DOCREFS[(state.brand||'')+'|'+(state.model||'')]||[];screen.innerHTML=head('Documentación','Referencias oficiales asociadas a la serie del vehículo.',''+esc(state.brand||'Marca')+' › '+esc(state.model||'Modelo')+' <span>›</span> Documentación')+'<div class="notice verified"><b>Fuente primaria:</b> Mercedes-Benz Trucks Service Information. Parte de la información profesional de taller requiere acceso autorizado al portal.</div>'+(docs.length?docs.map(d=>'<div class="list-card"><span class="badge">DOC</span><span class="grow"><b>'+d[0]+'</b><small>'+d[1]+'</small><small>Documento WIS: '+d[2]+'</small></span></div>').join(''):'<div class="notice">Aún no se ha asociado una referencia oficial específica a este modelo.</div>')+sourceRule()+safety();return}
  if(idx===1){screen.innerHTML=head('Códigos de falla','Identifica primero el código completo y el sistema.',''+esc(state.brand||'Marca')+' › '+esc(state.model||'Modelo')+' <span>›</span> Códigos de falla')+'<div class="notice"><b>Identificación antes de interpretar.</b><br>Escribe el código exactamente como aparece en el tablero o herramienta de diagnóstico. No se asignará un significado hasta que exista una referencia verificable para este modelo/configuración.</div><input id="faultCode" class="field" placeholder="Ej.: código completo tal como aparece"><select id="faultSystem" class="field"><option value="">Sistema (si se conoce)</option><option>Motor</option><option>Transmisión</option><option>Frenos / EBS</option><option>Postratamiento / SCR</option><option>Electricidad / electrónica</option></select><button id="faultLookup" class="primary" style="width:100%;margin-top:10px">Verificar código</button><div id="faultResult"></div>'+sourceRule()+safety();document.getElementById('faultLookup').onclick=()=>{let code=document.getElementById('faultCode').value.trim();document.getElementById('faultResult').innerHTML=!code?'<div class="notice">Ingresa el código completo.</div>':'<div class="notice verified"><b>Código registrado: '+esc(code)+'</b><br>La estructura de consulta ya está lista. Si el código no existe todavía en la base técnica verificada, GRAVIK no inventará su significado.</div>'};return}
  if(idx===0){let rows=VERIFIED[(state.brand||'')+'|'+(state.model||'')]||[];screen.innerHTML=head('Información general','Datos identificados y respaldados para esta familia.',''+esc(state.brand||'Marca')+' › '+esc(state.model||'Modelo')+' <span>›</span> Información general')+(rows.length?'<div class="notice verified"><b>Datos con fuente oficial.</b> Los valores que dependen de variante siguen marcados como tales.</div>'+rows.map(r=>'<div class="list-card"><span class="badge">✓</span><span class="grow"><b>'+r[0]+'</b><small>'+r[1]+'</small><small>Fuente: '+r[2]+'</small></span></div>').join(''):'<div class="notice">Todavía no hay especificaciones cargadas para esta combinación. GRAVIK no completará espacios con datos supuestos.</div>')+sourceRule()+safety();return}
 screen.innerHTML=head(s[0],s[1],esc(state.brand||'Marca')+' › '+esc(state.model||'Modelo')+' <span>›</span> '+s[0])+`<div class="notice"><b>Ficha técnica preparada para contenido verificado.</b><br>Esta V2 no rellenará esta sección con datos supuestos. Cuando una especificación dependa de variante, motor, serie/VIN o configuración, GRAVIK solicitará esa identificación antes de mostrarla.</div>`+sourceRule()+safety();return}
