@@ -1,9 +1,24 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#050505"><link rel="stylesheet" href="styles.css"><title>GRAVIK Operator</title></head><body>
-<div class="app-shell"><header><button id="menuBtn">☰</button><div><strong>GRAVIK</strong><span>OPERATOR</span></div><button id="infoBtn">i</button></header>
-<main><section class="hero"><div><small>CONOCIMIENTO QUE MUEVE GIGANTES</small><h1>Tu apoyo técnico en terreno</h1><p>Consulta equipos, simbología, sistemas, diagnósticos iniciales y checklist preoperacional.</p><div class="search"><input id="globalSearch" placeholder="Buscar equipo, símbolo o falla..."><button id="searchBtn">Buscar</button></div></div></section>
-<div class="status">● Funciona sin conexión <span>v1.0</span></div>
-<section class="grid"><button data-view="equipos">🚜<b>Equipos</b><small>Marcas y categorías</small></button><button data-view="simbolos">⚠<b>Símbolos</b><small>Alertas del tablero</small></button><button data-view="mecanica">🔧<b>Mecánica</b><small>Sistemas principales</small></button><button data-view="diagnostico">🔎<b>Diagnóstico</b><small>Orientación inicial</small></button><button data-view="checklist">☑<b>Checklist</b><small>Inspección preoperacional</small></button><button class="feature" data-view="nelson">✦<b>Nelson Responde</b><small>Asistente técnico</small></button></section>
-<section id="contentPanel"></section></main>
-<nav><button data-view="inicio">⌂<small>Inicio</small></button><button data-view="equipos">🚜<small>Equipos</small></button><button data-view="simbolos">⚠<small>Símbolos</small></button><button data-view="diagnostico">🔎<small>Diagnóstico</small></button><button data-view="nelson">✦<small>Nelson</small></button></nav></div>
-<dialog id="drawer"><button id="closeDrawer">✕ Cerrar</button><h2>GRAVIK Operator</h2><button data-view="inicio">Inicio</button><button data-view="equipos">Equipos</button><button data-view="simbolos">Simbología</button><button data-view="mecanica">Mecánica</button><button data-view="diagnostico">Diagnóstico</button><button data-view="checklist">Checklist</button><button data-view="nelson">Nelson Responde</button><button data-view="acerca">Acerca de GRAVIK</button></dialog>
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#070707"><link rel="stylesheet" href="styles.css"><title>GRAVIK OPERADOR</title></head>
+<body>
+<div class="app-shell">
+<header class="topbar">
+ <button id="backBtn" class="icon-btn hidden" aria-label="Volver">‹</button>
+ <button id="menuBtn" class="icon-btn" aria-label="Menú">☰</button>
+ <div class="brand"><strong>GRAVIK OPERADOR <span class="gear">⚙</span></strong><small>CONOCIMIENTO QUE MUEVE GIGANTES</small></div>
+ <button id="homeBtn" class="icon-btn" aria-label="Inicio">⌂</button>
+</header>
+<main id="screen" tabindex="-1"></main>
+<nav class="bottom-nav" aria-label="Navegación principal">
+ <button data-route="inicio"><span>⌂</span><small>Inicio</small></button>
+ <button data-route="equipos"><span>▣</span><small>Equipos</small></button>
+ <button data-route="simbolos"><span>⚠</span><small>Símbolos</small></button>
+ <button data-route="diagnostico"><span>⌕</span><small>Diagnóstico</small></button>
+ <button data-route="nelson"><span>✦</span><small>Nelson</small></button>
+</nav>
+</div>
+<dialog id="drawer">
+ <div class="drawer-head"><div><b>GRAVIK OPERADOR ⚙</b><small>Menú principal</small></div><button id="closeDrawer" class="icon-btn">✕</button></div>
+ <button data-route="inicio">Inicio</button><button data-route="equipos">Equipos</button><button data-route="simbolos">Símbolos</button><button data-route="mecanica">Mecánica</button><button data-route="diagnostico">Diagnóstico</button><button data-route="checklist">Checklist</button><button data-route="nelson">Nelson Responde</button><button data-route="acerca">Acerca de GRAVIK</button>
+</dialog>
 <script src="app.js"></script></body></html>
